@@ -2,7 +2,6 @@ set echo on
 set define off
 set sqlblanklines on
 spool KR-RELEASE-3_2-SR-ORACLE-Install.log
-@oracle/seqences/KR_UA_Fix_Sequences.sql
 @oracle/dml/KR_DML_01_KCCOI-13_B000.sql
 @oracle/dml/SR/KR_DML_01_KCCOI-2_B000.sql
 @oracle/dml/SR/KR_DML_01_KCINFR-419_B000.sql
