@@ -148,7 +148,13 @@ alter table KRIM_PERM_T modify NMSPC_CD varchar2(40) not null
 /
 alter table KRIM_PERM_T modify NM varchar2(100) not null
 /
-alter table KRIM_PERM_T add constraint KRIM_PERM_T_TC1 unique (NM, NMSPC_CD)
+-- JJS Fix for duplicates
+update krim_perm_t set desc_txt='Allows users to edit Kuali documents that are in ENROUTE status. '
+where PERM_ID='181';
+update krim_perm_t set desc_txt='Users who can modify entity records in Kuali Identity Management. '
+where PERM_ID='154';
+
+alter table KRIM_PERM_T add constraint KRIM_PERM_T_TC1 unique (NM, NMSPC_CD, DESC_TXT)
 /
 alter table KRIM_RSP_T modify NMSPC_CD varchar2(40) not null
 /
