@@ -45,7 +45,7 @@ DBMS_OUTPUT.PUT_LINE('KREW_DOC_NTE_TI1 does not exist, so not running statement 
 END IF;
 END;
 /
-CREATE TABLE KREW_DOC_NTE_T ( 
+CREATE TABLE KREW_DOC_NTE_T (
     DOC_NTE_ID      VARCHAR2(40),
     DOC_HDR_ID      VARCHAR2(40) NOT NULL,
     AUTH_PRNCPL_ID  VARCHAR2(40) NOT NULL,
@@ -88,11 +88,11 @@ END;
 DECLARE
 c NUMBER;
 BEGIN
-select count(*) into c from all_indexes where INDEX_NAME = 'KREW_ATT_TI1' ;
+select count(*) into c from all_indexes where INDEX_NAME = 'KREW_ATT_TP1' ;
 IF c>0 THEN
-EXECUTE IMMEDIATE 'DROP INDEX KREW_ATT_TI1';
+EXECUTE IMMEDIATE 'DROP INDEX KREW_ATT_TP1';
 ELSE
-DBMS_OUTPUT.PUT_LINE('KREW_ATT_TI1 does not exist, so not running statement to change/drop it.');
+DBMS_OUTPUT.PUT_LINE('KREW_ATT_TP1 does not exist, so not running statement to change/drop it.');
 END IF;
 END;
 /
