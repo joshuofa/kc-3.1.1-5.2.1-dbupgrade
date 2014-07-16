@@ -34,9 +34,9 @@ CREATE INDEX KRIM_PERM_TI2 ON KRIM_PERM_T (PERM_TMPL_ID, ACTV_IND)
 /
 CREATE INDEX KRIM_PERM_TMPL_TI1 ON KRIM_PERM_TMPL_T (NMSPC_CD, NM)
 /
-CREATE INDEX KRIM_ROLE_MBR_TI2 ON KRIM_ROLE_MBR_T (role_id, mbr_id, mbr_typ_cd)
+CREATE INDEX KRIM_ROLE_MBR_TI3 ON KRIM_ROLE_MBR_T (role_id, mbr_id, mbr_typ_cd)
 /
-CREATE INDEX KRIM_ROLE_MBR_TI3 ON KRIM_ROLE_MBR_T (mbr_id, mbr_typ_cd)
+CREATE INDEX KRIM_ROLE_MBR_TI4 ON KRIM_ROLE_MBR_T (mbr_id, mbr_typ_cd)
 /
 
 --
@@ -120,7 +120,7 @@ delete from krcr_nmspc_t where obj_id = '5a83c912-94b9-4b4d-ac3f-88c53380a4a3'
 /
 ---- KRMS test namespace
 
-insert into krcr_nmspc_t (nmspc_cd, obj_id, nm, appl_id) 
+insert into krcr_nmspc_t (nmspc_cd, obj_id, nm, appl_id)
 values ('KR-RULE-TEST', '5a83c912-94b9-4b4d-ac3f-88c53380a4a3', 'Kuali Rules Test', 'RICE')
 /
 
