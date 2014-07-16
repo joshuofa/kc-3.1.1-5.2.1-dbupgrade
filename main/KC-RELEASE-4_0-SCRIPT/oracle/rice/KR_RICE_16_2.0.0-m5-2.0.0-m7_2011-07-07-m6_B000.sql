@@ -1553,9 +1553,11 @@ END;
 -----------------------------------------------------------------------------
 -- KREW_RULE_ATTR_T
 -----------------------------------------------------------------------------
-ALTER TABLE KREW_RULE_ATTR_T DROP CONSTRAINT KREW_RULE_ATTR_TC0
-/
 ALTER TABLE KREW_RULE_ATTR_T DROP CONSTRAINT KREW_RULE_ATTR_TP1
+/
+DROP INDEX KREW_RULE_ATTR_TP1
+/
+DROP INDEX KREW_RULE_ATTR_TC0
 /
 ALTER TABLE KREW_RULE_ATTR_T RENAME TO TEMP_KREW_RULE_ATTR_T
 /
