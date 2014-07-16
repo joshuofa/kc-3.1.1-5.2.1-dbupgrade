@@ -556,9 +556,11 @@ END;
 -----------------------------------------------------------------------------
 -- KREW_RULE_TMPL_T
 -----------------------------------------------------------------------------
-ALTER TABLE KREW_RULE_TMPL_T DROP CONSTRAINT KREW_RULE_TMPL_TC0
+DROP INDEX KREW_RULE_TMPL_TC0
 /
-ALTER TABLE KREW_RULE_TMPL_T DROP CONSTRAINT KREW_RULE_TMPL_TI1
+DROP INDEX KREW_RULE_TMPL_TI1
+/
+DROP INDEX KREW_RULE_TMPL_TP1;
 /
 ALTER TABLE KREW_RULE_TMPL_T RENAME TO TEMP_KREW_RULE_TMPL_T
 /
