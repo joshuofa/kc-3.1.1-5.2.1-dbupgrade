@@ -14,7 +14,7 @@
 -- limitations under the License.
 --
 
-INSERT INTO KRCR_NMSPC_T VALUES ('KR-KRAD', sys_guid(), 1, 'Kuali Rapid Application Development', 'Y', 'RICE')
+INSERT INTO KRCR_NMSPC_T VALUES ('KR-KRAD', 1, 'Kuali Rapid Application Development', 'Y', 'RICE', sys_guid() )
 /
 INSERT INTO KRIM_ATTR_DEFN_T VALUES ((select (max(to_number(KIM_ATTR_DEFN_ID)) + 1) from KRIM_ATTR_DEFN_T where KIM_ATTR_DEFN_ID is not NULL and to_number(KIM_ATTR_DEFN_ID) < 10000), sys_guid(), 1, 'viewId', null, 'Y', 'KR-KRAD', 'org.kuali.rice.kim.bo.impl.KimAttributes')
 /
