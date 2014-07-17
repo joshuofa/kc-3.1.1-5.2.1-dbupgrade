@@ -1,8 +1,8 @@
 -- UAR-469 - Deleting records so we can get the table upgraded. We will need
 --           re-evaluate durring the upgrade for this module.
 
-delete from BUDGET_SUB_AWARDS;
-delete from BUDGET_SUB_AWARD_FILES;
+update BUDGET_SUB_AWARDS set ORGANIZATION_ID = '000001'
+/
 
 alter table BUDGET_SUB_AWARDS modify ORGANIZATION_ID VARCHAR2(8) NOT NULL
 /
