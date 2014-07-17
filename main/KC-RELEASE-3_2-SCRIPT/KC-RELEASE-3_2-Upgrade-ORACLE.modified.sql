@@ -39,6 +39,7 @@ spool KC-RELEASE-3_2-Upgrade-ORACLE-Install.log
 @oracle/sequences/KC_SEQ_SUBAWARD_FUNDING_SOURCE.sql
 @oracle/sequences/KC_SEQ_UNIT_CORRESP.sql
 @oracle/sequences/KC_SEQ_WATERMARK.sql
+@oracle/sequences/KC_SEQ_PROTO_CORRESP_TEMPL_ID.sql
 @oracle/tables/KC_TBL_AWARD.sql
 @oracle/tables/KC_TBL_AWARD_PAYMENT_SCHEDULE.sql
 @oracle/tables/KC_TBL_AWARD_REPORT_TRACKING.sql
