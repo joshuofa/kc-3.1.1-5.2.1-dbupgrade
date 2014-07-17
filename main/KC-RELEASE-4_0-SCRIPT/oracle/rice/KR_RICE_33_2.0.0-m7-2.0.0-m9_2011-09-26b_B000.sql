@@ -57,7 +57,7 @@ values ((select (max(to_number(role_id)) + 1) from krim_role_t where role_id is 
 
 insert into krim_role_mbr_t
 (role_mbr_id, role_id, mbr_id, mbr_typ_cd, last_updt_dt, ver_nbr, obj_id)
-values ((select (max(to_number(role_mbr_id)) + 1) from krim_role_mbr_t where role_mbr_id is not NULL and to_number(role_mbr_id) < 10000),
+values ((select (max(to_number(role_mbr_id)) + 1) from krim_role_mbr_t where role_mbr_id is not NULL and to_number(role_mbr_id) < 1000000),
         (select role_id from krim_role_t where role_nm = 'Kuali Rules Management System Administrator' and nmspc_cd = 'KR-RULE'),
         (select prncpl_id from krim_prncpl_t where prncpl_nm = 'admin'),
         'P', current_date, 1, sys_guid())
@@ -65,7 +65,7 @@ values ((select (max(to_number(role_mbr_id)) + 1) from krim_role_mbr_t where rol
 
 insert into krim_role_perm_t
 (role_perm_id, role_id, perm_id, actv_ind, ver_nbr, obj_id)
-values ((select (max(to_number(role_perm_id)) + 1) from krim_role_perm_t where role_perm_id is not NULL and to_number(role_perm_id) < 10000),
+values ((select (max(to_number(role_perm_id)) + 1) from krim_role_perm_t where role_perm_id is not NULL and to_number(role_perm_id) < 100000),
         (select role_id from krim_role_t where role_nm = 'Kuali Rules Management System Administrator' and nmspc_cd = 'KR-RULE'),
         (select perm_id from krim_perm_t where nm = 'Maintain KRMS Agenda' and nmspc_cd = 'KR-RULE'),
         'Y', 1, sys_guid())
