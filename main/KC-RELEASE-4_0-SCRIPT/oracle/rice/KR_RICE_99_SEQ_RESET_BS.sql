@@ -71,8 +71,8 @@ begin
     select nvl(max(to_number(ID)),'1') + 1 into l_new_seq from
         ((select max(to_number(ATTR_DATA_ID)) as ID from KRIM_RSP_ATTR_DATA_T where decode(is_numeric(ATTR_DATA_ID),1,to_number(ATTR_DATA_ID)) < 10000)
         union (select max(to_number(ATTR_DATA_ID)) as ID from KRIM_DLGN_MBR_ATTR_DATA_T where decode(is_numeric(ATTR_DATA_ID),1,to_number(ATTR_DATA_ID)) < 10000)
-        union (select max(to_number(ATTR_DATA_ID)) as ID from KRIM_ROLE_MBR_ATTR_DATA_T where decode(is_numeric(ATTR_DATA_ID),1,to_number(ATTR_DATA_ID)) < 10000)
-        union (select max(to_number(ATTR_DATA_ID)) as ID from KRIM_PERM_ATTR_DATA_T where decode(is_numeric(ATTR_DATA_ID),1,to_number(ATTR_DATA_ID)) < 10000));
+        union (select max(to_number(ATTR_DATA_ID)) as ID from KRIM_ROLE_MBR_ATTR_DATA_T where decode(is_numeric(ATTR_DATA_ID),1,to_number(ATTR_DATA_ID)) < 200000)
+        union (select max(to_number(ATTR_DATA_ID)) as ID from KRIM_PERM_ATTR_DATA_T where decode(is_numeric(ATTR_DATA_ID),1,to_number(ATTR_DATA_ID)) < 100000));
     execute immediate 'CREATE SEQUENCE KRIM_ATTR_DATA_ID_BS_S START WITH ' || l_new_seq ||
         ' MAXVALUE 99999999 MINVALUE 1 NOCYCLE NOCACHE NOORDER';
 
