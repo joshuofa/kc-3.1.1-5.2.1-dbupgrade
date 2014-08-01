@@ -1,5 +1,20 @@
+create or replace function is_numeric (p_string in varchar2)
+   return NUMBER as l_number number;
+   begin
+      l_number := p_string;
+       return 1;
+   exception
+       when others then
+       return 0;
+  end;
+   /
+
 DECLARE roleCount NUMBER;
         rolePermCount NUMBER;
+         l_new_seq INTEGER;
+
+---select nvl(max(to_number(ROLE_ID)),'1') + 1 into l_new_seq from KRIM_ROLE_T where decode(is_numeric(ROLE_ID),1,to_number(ROLE_ID)) < 1000000;
+--TODO: FIX THIS ONE!!!!!
 BEGIN
     SELECT COUNT(*) INTO roleCount FROM KRIM_ROLE_T WHERE NMSPC_CD = 'KC-SYS' AND ROLE_NM = 'KC Superuser';
     IF roleCount = 0 THEN   
