@@ -1,4 +1,4 @@
-INSERT INTO KREN_PRODCR_T (PRODCR_ID, NM, DESC_TXT, CNTCT_INFO, VER_NBR) VALUES (KREN_PRODCR_S.NEXTVAL, 'KC Notification System', 'This producer represents messages sent from KC', 'kcnotification@gmail.com', 1)
+INSERT INTO KREN_PRODCR_T (PRODCR_ID, NM, DESC_TXT, CNTCT_INFO, VER_NBR, OBJ_ID) VALUES (KREN_PRODCR_S.NEXTVAL, 'KC Notification System', 'This producer represents messages sent from KC', 'kcnotification@gmail.com', 1, SYS_GUID())
 /
 DELETE FROM KREN_CHNL_PRODCR_T WHERE CHNL_ID = (SELECT CHNL_ID FROM KREN_CHNL_T WHERE NM LIKE '%KC Notification Channel%')
 /
