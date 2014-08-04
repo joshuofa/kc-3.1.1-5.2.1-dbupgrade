@@ -2213,6 +2213,11 @@ END;
 /
 ALTER TABLE KREW_APP_DOC_STAT_TRAN_T RENAME TO TEMP_KREW_APP_DOC_STAT_TRAN_T
 /
+
+--inserting this dummy statement to delay next statement to avoid ORA-04020: deadlock detected while trying to lock object 
+select count(*) from TEMP_KREW_APP_DOC_STAT_TRAN_T
+/
+
 CREATE TABLE KREW_APP_DOC_STAT_TRAN_T
 (
       APP_DOC_STAT_TRAN_ID VARCHAR2(40)

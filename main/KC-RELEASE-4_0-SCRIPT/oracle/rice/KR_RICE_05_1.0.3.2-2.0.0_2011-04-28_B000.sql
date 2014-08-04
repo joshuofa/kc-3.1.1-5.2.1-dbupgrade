@@ -170,6 +170,11 @@ CREATE INDEX KREW_ACTN_TKN_TI5 ON KREW_ACTN_TKN_T(DOC_HDR_ID)
 
 ALTER TABLE KREW_APP_DOC_STAT_TRAN_T RENAME TO OLD_KREW_APP_DOC_STAT_TRAN_T
 /
+
+--inserting this dummy statement to delay next statement to avoid ORA-04020: deadlock detected while trying to lock object 
+select count(*) from OLD_KREW_APP_DOC_STAT_TRAN_T
+/
+
 CREATE TABLE KREW_APP_DOC_STAT_TRAN_T
 (
       APP_DOC_STAT_TRAN_ID NUMBER(19),
