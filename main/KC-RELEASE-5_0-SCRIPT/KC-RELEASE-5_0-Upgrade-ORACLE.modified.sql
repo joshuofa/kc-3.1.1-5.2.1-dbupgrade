@@ -115,7 +115,7 @@ spool KC-RELEASE-5_0-Upgrade-ORACLE-Install.log
 @../../current/5.0/dml/KC_DML_01_KCIAC-139_B000.sql
 @../../current/5.0/dml/KC_DML_01_KCIAC-152_B000.sql
 @../../current/5.0/dml/KC_DML_01_KCIAC-153_B000.sql
-@../../current/5.0/dml/KC_DML_01_KCIAC-18_B000.sql
+--@../../current/5.0/dml/KC_DML_01_KCIAC-18_B000.sql
 @../../current/5.0/dml/KC_DML_01_KCIAC-27_B000.sql
 @../../current/5.0/dml/KC_DML_01_KCIAC-28_B000.sql
 @../../current/5.0/dml/KC_DML_01_KCIAC-41_B000.sql
