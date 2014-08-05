@@ -81,7 +81,8 @@ UNIQUE (obj_id)
 --     KULRICE-6676 - adding system parameter for default locale
 --
 
-INSERT INTO KRCR_PARM_T VALUES ('KR-NS', 'All', 'DEFAULT_LOCALE_CODE', sys_guid(), 1, 'CONFG', 'en-US',
+INSERT INTO KRCR_PARM_T (NMSPC_CD, CMPNT_CD, PARM_NM, OBJ_ID, VER_NBR, PARM_TYP_CD, VAL, PARM_DESC_TXT, EVAL_OPRTR_CD, APPL_ID)
+VALUES ('KR-NS', 'All', 'DEFAULT_LOCALE_CODE', sys_guid(), 1, 'CONFG', 'en-US',
 'The locale code that should be used within the application when otherwise not specified.', 'A', 'KUALI')
 /
 
@@ -237,5 +238,6 @@ CREATE  TABLE  krms_nl_tmpl_attr_t (
 -- 
 
 
-INSERT INTO KRCR_PARM_T VALUES ('KR-NS', 'All', 'OLTP_LOCKOUT_DEFAULT_MESSAGE', sys_guid(), 1, 'CONFG', 'The module you are attempting to access has been locked for maintenance.', 'Default message to display when a module is locked', 'A', 'KUALI')
+INSERT INTO KRCR_PARM_T (NMSPC_CD, CMPNT_CD, PARM_NM, OBJ_ID, VER_NBR, PARM_TYP_CD, VAL, PARM_DESC_TXT, EVAL_OPRTR_CD, APPL_ID)
+VALUES ('KR-NS', 'All', 'OLTP_LOCKOUT_DEFAULT_MESSAGE', sys_guid(), 1, 'CONFG', 'The module you are attempting to access has been locked for maintenance.', 'Default message to display when a module is locked', 'A', 'KUALI')
 /
