@@ -346,8 +346,8 @@ case "${dbtype}" in
 
 	cd KC-RELEASE-5_2_1-UA-SCRIPT
 	sqlplus "${un}"/"${pw}${DBSvrNm}" < KC-RELEASE-5_2_1-UA-ORACLE.sql
-        mv *.log ../../LOGS/
-        cd ../.. ;;
+        mv *.log ../LOGS/
+        cd .. ;;
 
 	"MYSQL")
 
