@@ -342,7 +342,7 @@ case "${dbtype}" in
 	cd KC-RELEASE-3_0-CLEAN/oracle
 	sqlplus "${Riceun}"/"${Ricepw}${RiceDBSvrNm}" < krrelease/datasql/KR_00_CLEAN_SEQ_BS.sql
         mv *.log ../../LOGS/
-        cd ../.. ;;
+        cd ../.. 
 
 	cd KC-RELEASE-5_2_1-UA-SCRIPT
 	sqlplus "${un}"/"${pw}${DBSvrNm}" < KC-RELEASE-5_2_1-UA-ORACLE.sql
