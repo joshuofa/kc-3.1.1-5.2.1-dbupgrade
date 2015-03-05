@@ -394,6 +394,7 @@ insert into krim_role_mbr_t ( role_mbr_id, ver_nbr, obj_id, role_id, mbr_id, mbr
   select KRIM_ROLE_MBR_ID_S.NEXTVAL, 1, SYS_GUID(), '1259', prncpl_id, 'P', null, null 
   from krim_entity_cache_t 
   where prncpl_nm = 'peck'
+;
 
 
 
@@ -402,8 +403,9 @@ insert into krim_role_mbr_t ( role_mbr_id, ver_nbr, obj_id, role_id, mbr_id, mbr
 -- ====================================================================================================================
 
 -- disable unused negotiation association types ProposalLog and SubAward:
-update NEGOTIATION_ASSOCIATION_TYPE set ACTV_IND = 'N' 
- where NEGOTIATION_ASSC_TYPE_CODE in ('PL', 'SWD');
+update NEGOTIATION_ASSOCIATION_TYPE set ACTV_IND='N'
+  where NEGOTIATION_ASSC_TYPE_CODE in ('PL', 'SWD')
+;
 
 
 -- ====================================================================================================================
