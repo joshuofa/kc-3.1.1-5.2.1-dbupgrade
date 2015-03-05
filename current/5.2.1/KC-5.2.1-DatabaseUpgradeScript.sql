@@ -22,14 +22,15 @@ values (KRIM_ROLE_PERM_ID_S.nextval, sys_guid(), 1, 1221, 1254, 'Y')
 
 
 -- ====================================================================================================================
+--  ***NO LONGER REQUIRED ***
 -- 4)  Add 'SPS Management' Role (1221) to Amy Dougherty's Person record (doughera).
 -- ====================================================================================================================
 
-insert into krim_role_mbr_t ( role_mbr_id, ver_nbr, obj_id, role_id, mbr_id, mbr_typ_cd, actv_frm_dt, actv_to_dt ) 
-  select KRIM_ROLE_MBR_ID_S.NEXTVAL, 1, SYS_GUID(), '1221', prncpl_id, 'P', null, null 
-  from krim_entity_cache_t 
-  where prncpl_nm = 'doughera'
-;
+-- insert into krim_role_mbr_t ( role_mbr_id, ver_nbr, obj_id, role_id, mbr_id, mbr_typ_cd, actv_frm_dt, actv_to_dt ) 
+--   select KRIM_ROLE_MBR_ID_S.NEXTVAL, 1, SYS_GUID(), '1221', prncpl_id, 'P', null, null 
+--   from krim_entity_cache_t 
+--   where prncpl_nm = 'doughera'
+-- ;
 
 -- ====================================================================================================================
 -- NOT NEEDED ANY LONGER DUE TO 25.
@@ -808,3 +809,54 @@ WHERE EXISTS (SELECT EPS_PROPOSAL.*,NARRATIVE.*
   AND NARRATIVE.MODULE_STATUS_CODE='I')
 ; 
 
+
+-- ====================================================================================================================
+-- 29. UAR-949: Change Special Review status for Human Subjects to 'not yet applied'
+-- ====================================================================================================================
+
+--PropDev SQL: 
+ update eps_prop_special_review e set e.approval_type_code = '3' 
+ where exists (select s.special_review_code, s.description, u.active_flag, c.module_code, c.description, a.DESCRIPTION, e.* 
+     from special_review s, special_review_usage u, coeus_module c, sp_rev_approval_type a 
+     where s.special_review_code = u.special_review_code 
+        and c.module_code = u.module_code 
+        and e.special_review_code = s.special_review_code 
+        and a.approval_type_code = e.approval_type_code 
+        and s.special_review_code = '1' --human subjects 
+        and c.module_code = '3' --propdev 
+        and e.protocol_status_description is null 
+        and e.approval_type_code != '3' );
+        
+--IP SQL: 
+ update proposal_special_review p set p.approval_type_code = '3' 
+ where exists (select s.special_review_code, s.description, u.active_flag, c.module_code, c.description, a.DESCRIPTION, pr.proposal_number, p.* 
+ from special_review s, special_review_usage u, coeus_module c, sp_rev_approval_type a, proposal pr 
+ where s.special_review_code = u.special_review_code 
+   and c.module_code = u.module_code 
+   and p.special_review_code = s.special_review_code 
+   and p.proposal_id = pr.proposal_id 
+   and a.approval_type_code = p.approval_type_code 
+   and s.special_review_code = '1' --human subjects 
+   and c.module_code = '2' --IP 
+   and p.approval_type_code != '3');
+
+--Award SQL: 
+ update award_special_review asr set asr.approval_type_code = '3' 
+ where exists (select s.special_review_code, s.description, u.active_flag, c.module_code, c.description, a.DESCRIPTION, aw.award_number, asr.* 
+ from special_review s, special_review_usage u, coeus_module c, sp_rev_approval_type a, award aw 
+ where s.special_review_code = u.special_review_code 
+   and c.module_code = u.module_code 
+   and asr.special_review_code = s.special_review_code 
+   and asr.award_id = aw.award_id 
+   and a.approval_type_code = asr.approval_type_code 
+   and s.special_review_code = '1' --human subjects 
+   and c.module_code = '1' --Award 
+   and asr.approval_type_code != '3');
+
+
+-- ====================================================================================================================
+-- 30. UAR-942:  Populate 'Primary_Title' for Sherry Esham in Person Extended Attributes table
+-- ====================================================================================================================
+  
+  UPDATE PERSON_EXT_T SET PRIMARY_TITLE = 'Director, Sponsored Projects Services' WHERE PERSON_ID = 103308801414;
+  
