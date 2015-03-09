@@ -859,4 +859,34 @@ WHERE EXISTS (SELECT EPS_PROPOSAL.*,NARRATIVE.*
 -- ====================================================================================================================
   
   UPDATE PERSON_EXT_T SET PRIMARY_TITLE = 'Director, Sponsored Projects Services' WHERE PERSON_ID = 103308801414;
-  
+
+
+-- ====================================================================================================================
+-- 31. UAR-832: Turn Watermarks off till after go live
+-- ====================================================================================================================
+ 
+ UPDATE WATERMARK SET WATERMARK_STATUS = 'N';
+
+
+
+-- ====================================================================================================================
+-- 32. UAR-1121:  Backdoor role and permissions
+-- ====================================================================================================================
+
+ --create backdoor permission  
+ insert into KRIM_PERM_T (PERM_ID,OBJ_ID,VER_NBR,PERM_TMPL_ID,NMSPC_CD,NM,DESC_TXT,ACTV_IND) 
+  values (KRIM_PERM_ID_S.NEXTVAL, SYS_GUID(), 1, '1', 'KR-SYS', 'Use Backdoor Log In Kuali Portal', 'Use Backdoor Log In Kuali Portal', 'Y')
+;
+
+ -- create backdoor role
+ insert into KRIM_ROLE_T (ROLE_ID,OBJ_ID,VER_NBR,ROLE_NM,NMSPC_CD,DESC_TXT,KIM_TYP_ID,ACTV_IND,LAST_UPDT_DT) 
+  values (KRIM_ROLE_ID_S.NEXTVAL, SYS_GUID(), 1, 'Back Door Login', 'KR-SYS', 'Use Backdoor Log In Kuali Portal', '1', 'Y', null)
+;
+
+-- add backdoor permission to backdoor role
+ insert into KRIM_ROLE_PERM_T (ROLE_PERM_ID,OBJ_ID,VER_NBR,ACTV_IND,ROLE_ID,PERM_ID) 
+  values (KRIM_ROLE_PERM_ID_S.NEXTVAL, SYS_GUID(), 1, 'Y',
+    (select ROLE_ID from KRIM_ROLE_T where ROLE_NM='Back Door Login'),
+    (select PERM_ID from KRIM_PERM_T where NM='Use Backdoor Log In Kuali Portal'))
+;
+
