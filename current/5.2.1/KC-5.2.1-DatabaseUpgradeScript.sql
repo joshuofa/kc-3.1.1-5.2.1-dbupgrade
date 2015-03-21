@@ -9,16 +9,44 @@ update krim_role_t set ACTV_IND='Y' where role_id='1124' and role_nm='Award Modi
 ;
 
 -- ====================================================================================================================
--- 3)  Add 'Modify Award Report Tracking' permission (1274) and - 'Modify Proposal Rates' (Permission ID: 1254) to the 'SPS Management' Role (1221). 
+-- 3) UAR-539: Add permissions to 'SPS Management' Role (1221). 
 -- ====================================================================================================================
 
+-- 'Modify Award Report Tracking' (Permission ID: 1274) 
 insert into krim_role_perm_t (ROLE_PERM_ID, OBJ_ID, VER_NBR, ROLE_ID, PERM_ID, ACTV_IND)
 values (KRIM_ROLE_PERM_ID_S.nextval, sys_guid(), 1, 1221, 1274, 'Y')
 ;
 
+-- 'Modify Proposal Rates' (Permission ID: 1254) 
 insert into krim_role_perm_t (ROLE_PERM_ID, OBJ_ID, VER_NBR, ROLE_ID, PERM_ID, ACTV_IND)
 values (KRIM_ROLE_PERM_ID_S.nextval, sys_guid(), 1, 1221, 1254, 'Y')
 ;
+
+-- Create Negotiation (1268) 
+insert into krim_role_perm_t (ROLE_PERM_ID, OBJ_ID, VER_NBR, ROLE_ID, PERM_ID, ACTV_IND)
+values (KRIM_ROLE_PERM_ID_S.nextval, sys_guid(), 1, 1221, 1268, 'Y')
+;
+
+-- Modify Negotiation (1269) 
+insert into krim_role_perm_t (ROLE_PERM_ID, OBJ_ID, VER_NBR, ROLE_ID, PERM_ID, ACTV_IND)
+values (KRIM_ROLE_PERM_ID_S.nextval, sys_guid(), 1, 1221, 1269, 'Y')
+;
+
+-- Modify Negotiation (1270) 
+insert into krim_role_perm_t (ROLE_PERM_ID, OBJ_ID, VER_NBR, ROLE_ID, PERM_ID, ACTV_IND)
+values (KRIM_ROLE_PERM_ID_S.nextval, sys_guid(), 1, 1221, 1270, 'Y')
+;
+
+-- Modify Activities (1271) 
+insert into krim_role_perm_t (ROLE_PERM_ID, OBJ_ID, VER_NBR, ROLE_ID, PERM_ID, ACTV_IND)
+values (KRIM_ROLE_PERM_ID_S.nextval, sys_guid(), 1, 1221, 1271, 'Y')
+;
+
+-- View Negotiation - Unrestricted (1272) 
+insert into krim_role_perm_t (ROLE_PERM_ID, OBJ_ID, VER_NBR, ROLE_ID, PERM_ID, ACTV_IND)
+values (KRIM_ROLE_PERM_ID_S.nextval, sys_guid(), 1, 1221, 1272, 'Y')
+;
+
 
 
 -- ====================================================================================================================
@@ -360,32 +388,34 @@ update KRCR_PARM_T set val='Approval indicates that information in the online pr
 
 
 -- ====================================================================================================================
+-- ***NO LONGER REQUIRED***
 -- 18. Update Custom Attribute Label and Name for correct sorting order (UAR-1012)
 -- ====================================================================================================================
 
-DECLARE 
-  l_label VARCHAR2(30) := '1. F'||'&'||'A Rate % (ex: 53/53.5)';
-BEGIN
-  update CUSTOM_ATTRIBUTE set name = l_label, label = l_label
-  	where id =1;
-END;
-/
+-- DECLARE 
+--   l_label VARCHAR2(30) := '1. F'||'&'||'A Rate % (ex: 53/53.5)';
+-- BEGIN
+--   update CUSTOM_ATTRIBUTE set name = l_label, label = l_label
+--  	where id =1;
+-- END;
+-- /
 
-DECLARE 
-  l_label VARCHAR2(30) := '2. Prj Location: Bldg-Rm-Other';
-BEGIN
-  update CUSTOM_ATTRIBUTE set name = l_label, label = l_label
-  	where id =2;
-END;
-/
+-- DECLARE 
+--  l_label VARCHAR2(30) := '2. Prj Location: Bldg-Rm-Other';
+-- BEGIN
+--   update CUSTOM_ATTRIBUTE set name = l_label, label = l_label
+--   	where id =2;
+-- END;
+-- /
 
-DECLARE 
-  l_label VARCHAR2(30) := '3. Follow-on to Account No.';
-BEGIN
-  update CUSTOM_ATTRIBUTE set name = l_label, label = l_label
-  	where id =3;
-END;
-/
+-- DECLARE 
+--   l_label VARCHAR2(30) := '3. Follow-on to Account No.';
+-- BEGIN
+--   update CUSTOM_ATTRIBUTE set name = l_label, label = l_label
+--   	where id =3;
+-- END;
+-- /
+
 
 -- ====================================================================================================================
 -- 19. Add 'Kuali Rules Management System Administrator' Role (1259) to Person record for Jessica Peck (peck).
@@ -655,77 +685,52 @@ insert into QUESTION_YNQ_MAP (QUESTION_REF_ID, YNQ_QUESTION_ID)
 -- 25. UAR-570 - Add listed permissions to 'UA SPS Maintenance' Role (1206)
 -- ====================================================================================================================
 
--- Create Negotiation (1268) 
-insert into krim_role_perm_t (ROLE_PERM_ID, OBJ_ID, VER_NBR, ROLE_ID, PERM_ID, ACTV_IND)
-  values (KRIM_ROLE_PERM_ID_S.nextval, sys_guid(), 1, 1206, 1268, 'Y')
-;
-
--- Modify Negotiation (1269) 
-insert into krim_role_perm_t (ROLE_PERM_ID, OBJ_ID, VER_NBR, ROLE_ID, PERM_ID, ACTV_IND)
-  values (KRIM_ROLE_PERM_ID_S.nextval, sys_guid(), 1, 1206, 1269, 'Y')
-;
-
--- Create Activities (1270) 
-insert into krim_role_perm_t (ROLE_PERM_ID, OBJ_ID, VER_NBR, ROLE_ID, PERM_ID, ACTV_IND)
-  values (KRIM_ROLE_PERM_ID_S.nextval, sys_guid(), 1, 1206, 1270, 'Y')
-;
-
--- Modify Activities (1271) 
-insert into krim_role_perm_t (ROLE_PERM_ID, OBJ_ID, VER_NBR, ROLE_ID, PERM_ID, ACTV_IND)
-  values (KRIM_ROLE_PERM_ID_S.nextval, sys_guid(), 1, 1206, 1271, 'Y')
-;
-
--- View Negotiation - Unrestricted (1272) 
-insert into krim_role_perm_t (ROLE_PERM_ID, OBJ_ID, VER_NBR, ROLE_ID, PERM_ID, ACTV_IND)
-  values (KRIM_ROLE_PERM_ID_S.nextval, sys_guid(), 1, 1206, 1272, 'Y')
-;
-
--- 'Add Unit' (1296) 
+--'Add Unit' (1296)
 insert into krim_role_perm_t (ROLE_PERM_ID, OBJ_ID, VER_NBR, ROLE_ID, PERM_ID, ACTV_IND)
   values (KRIM_ROLE_PERM_ID_S.nextval, sys_guid(), 1, 1206, 1296, 'Y')
 ;
 
--- 'Modify Unit' (1297) 
+--'Modify Unit' (1297)
 insert into krim_role_perm_t (ROLE_PERM_ID, OBJ_ID, VER_NBR, ROLE_ID, PERM_ID, ACTV_IND)
   values (KRIM_ROLE_PERM_ID_S.nextval, sys_guid(), 1, 1206, 1297, 'Y')
 ;
 
--- 'Create Award Sponsor Template' (1298) 
+--'Create Award Sponsor Template' (1298)
 insert into krim_role_perm_t (ROLE_PERM_ID, OBJ_ID, VER_NBR, ROLE_ID, PERM_ID, ACTV_IND)
   values (KRIM_ROLE_PERM_ID_S.nextval, sys_guid(), 1, 1206, 1298, 'Y')
 ;
 
--- 'Modify Award Sponsor Template' (1299) 
+--'Modify Award Sponsor Template' (1299)
 insert into krim_role_perm_t (ROLE_PERM_ID, OBJ_ID, VER_NBR, ROLE_ID, PERM_ID, ACTV_IND)
   values (KRIM_ROLE_PERM_ID_S.nextval, sys_guid(), 1, 1206, 1299, 'Y')
 ;
 
--- 'View Award Sponsor Template' (1300) 
+--'View Award Sponsor Template' (1300)
 insert into krim_role_perm_t (ROLE_PERM_ID, OBJ_ID, VER_NBR, ROLE_ID, PERM_ID, ACTV_IND)
   values (KRIM_ROLE_PERM_ID_S.nextval, sys_guid(), 1, 1206, 1300, 'Y')
 ;
 
--- 'Add Sponsor Hierarchy' (1303) 
+--'Add Sponsor Hierarchy' (1303)
 insert into krim_role_perm_t (ROLE_PERM_ID, OBJ_ID, VER_NBR, ROLE_ID, PERM_ID, ACTV_IND)
   values (KRIM_ROLE_PERM_ID_S.nextval, sys_guid(), 1, 1206, 1303, 'Y')
 ;
 
--- 'Modify Sponsor Hierarchy' (1304)
+--'Modify Sponsor Hierarchy' (1304)
 insert into krim_role_perm_t (ROLE_PERM_ID, OBJ_ID, VER_NBR, ROLE_ID, PERM_ID, ACTV_IND)
   values (KRIM_ROLE_PERM_ID_S.nextval, sys_guid(), 1, 1206, 1304, 'Y')
-; 
+;
 
--- 'Delete Sponsor Hierarchy' (1305) 
+--'Delete Sponsor Hierarchy' (1305)
 insert into krim_role_perm_t (ROLE_PERM_ID, OBJ_ID, VER_NBR, ROLE_ID, PERM_ID, ACTV_IND)
   values (KRIM_ROLE_PERM_ID_S.nextval, sys_guid(), 1, 1206, 1305, 'Y')
 ;
 
--- 'Add Sponsor' (1306) 
+--'Add Sponsor' (1306)
 insert into krim_role_perm_t (ROLE_PERM_ID, OBJ_ID, VER_NBR, ROLE_ID, PERM_ID, ACTV_IND)
   values (KRIM_ROLE_PERM_ID_S.nextval, sys_guid(), 1, 1206, 1306, 'Y')
 ;
 
--- 'Modify Sponsor' (1307) 
+--'Modify Sponsor' (1307)
 insert into krim_role_perm_t (ROLE_PERM_ID, OBJ_ID, VER_NBR, ROLE_ID, PERM_ID, ACTV_IND)
   values (KRIM_ROLE_PERM_ID_S.nextval, sys_guid(), 1, 1206, 1307, 'Y')
 ;
@@ -888,5 +893,129 @@ WHERE EXISTS (SELECT EPS_PROPOSAL.*,NARRATIVE.*
   values (KRIM_ROLE_PERM_ID_S.NEXTVAL, SYS_GUID(), 1, 'Y',
     (select ROLE_ID from KRIM_ROLE_T where ROLE_NM='Back Door Login'),
     (select PERM_ID from KRIM_PERM_T where NM='Use Backdoor Log In Kuali Portal'))
+;
+
+
+
+-- ====================================================================================================================
+-- 33. Add Backdoor permission to - UA SPS Maintenance (Role ID: 1206), IRB Administrator (Role ID: 1119), CRS Management (Role ID: 1238)
+-- ====================================================================================================================
+ 
+ -- UA SPS Maintenance (Role ID: 1206)
+ insert into KRIM_ROLE_PERM_T (ROLE_PERM_ID,OBJ_ID,VER_NBR,ACTV_IND,ROLE_ID,PERM_ID) 
+  values (KRIM_ROLE_PERM_ID_S.NEXTVAL, SYS_GUID(), 1, 'Y', 1206,
+  	(select PERM_ID from KRIM_PERM_T where NM='Use Backdoor Log In Kuali Portal'))
+ ;
+
+ -- IRB Administrator (Role ID: 1119)
+ insert into KRIM_ROLE_PERM_T (ROLE_PERM_ID,OBJ_ID,VER_NBR,ACTV_IND,ROLE_ID,PERM_ID) 
+  values (KRIM_ROLE_PERM_ID_S.NEXTVAL, SYS_GUID(), 1, 'Y', 1119,
+  	(select PERM_ID from KRIM_PERM_T where NM='Use Backdoor Log In Kuali Portal'))
+ ;
+
+ -- CRS Management (Role ID: 1238)
+ insert into KRIM_ROLE_PERM_T (ROLE_PERM_ID,OBJ_ID,VER_NBR,ACTV_IND,ROLE_ID,PERM_ID) 
+  values (KRIM_ROLE_PERM_ID_S.NEXTVAL, SYS_GUID(), 1, 'Y', 1238,
+  	(select PERM_ID from KRIM_PERM_T where NM='Use Backdoor Log In Kuali Portal'))
+ ;
+
+
+
+
+-- ====================================================================================================================
+-- 34. Add the newly created backdoor Role in step 32 to person records
+-- ====================================================================================================================
+
+insert into krim_role_mbr_t ( role_mbr_id, ver_nbr, obj_id, role_id, mbr_id, mbr_typ_cd, actv_frm_dt, actv_to_dt ) 
+  select KRIM_ROLE_MBR_ID_S.NEXTVAL, 1, SYS_GUID(),  
+         (select ROLE_ID from KRIM_ROLE_T where ROLE_NM='Back Door Login'), 
+         prncpl_id, 'P', null, null 
+  from krim_entity_cache_t 
+  where prncpl_nm IN ('hlo', 'jshard', 'jwingate', 'kosta', 'leahasullivan', 'mmoen', 'nataliac', 'rbtucker', 'rhunter', 'shaloo', 'sskinner')
+;
+
+
+
+-- ====================================================================================================================
+-- 35. UAR-1056: Turn on IRB below linking parameters, change Parameter value to 'Y' 
+-- ====================================================================================================================
+
+-- irb.protocol.award.linking.enabled 
+update KRCR_PARM_T set val='Y' where parm_nm='irb.protocol.award.linking.enabled'
+;
+
+-- irb.protocol.development.proposal.linking.enabled 
+update KRCR_PARM_T set val='Y' where parm_nm='irb.protocol.development.proposal.linking.enabled'
+;
+
+-- irb.protocol.institute.proposal.linking.enabled 
+update KRCR_PARM_T set val='Y' where parm_nm='irb.protocol.institute.proposal.linking.enabled'
+;
+
+
+
+-- ====================================================================================================================
+-- 36. UAR-1098: Add permissions 1021 (View Proposal), 1029 (View Award), and 1114 (Open Institutional Proposal) to Role 1119 'IRB Administrator' 
+-- ====================================================================================================================
+
+--View Proposal Permission (ID: 1021)
+insert into KRIM_ROLE_PERM_T (ROLE_PERM_ID,OBJ_ID,VER_NBR,ACTV_IND,ROLE_ID,PERM_ID) 
+  values (KRIM_ROLE_PERM_ID_S.NEXTVAL, SYS_GUID(), 1, 'Y', 1119, 1021)
+;
+
+--View Award Permission (ID: 1029)
+insert into KRIM_ROLE_PERM_T (ROLE_PERM_ID,OBJ_ID,VER_NBR,ACTV_IND,ROLE_ID,PERM_ID) 
+  values (KRIM_ROLE_PERM_ID_S.NEXTVAL, SYS_GUID(), 1, 'Y', 1119, 1029)
+;
+
+--Open Institutional Proposal (ID: 1114)
+insert into KRIM_ROLE_PERM_T (ROLE_PERM_ID,OBJ_ID,VER_NBR,ACTV_IND,ROLE_ID,PERM_ID) 
+  values (KRIM_ROLE_PERM_ID_S.NEXTVAL, SYS_GUID(), 1, 'Y', 1119, 1114)
+;
+
+
+
+-- ====================================================================================================================
+-- 37. UAR-861: Add permissions 1268 (Create Negotiation), 1269 (Modify Negotiation), 1270 (Create Activities), 
+--     1271 (Modify Activities), 1272 (View Negotiation - Unrestricted) to Role 1238 'CRS Management' 
+-- ====================================================================================================================
+
+--Create Negotiation (ID: 1268)
+insert into KRIM_ROLE_PERM_T (ROLE_PERM_ID,OBJ_ID,VER_NBR,ACTV_IND,ROLE_ID,PERM_ID) 
+  values (KRIM_ROLE_PERM_ID_S.NEXTVAL, SYS_GUID(), 1, 'Y', 1238, 1268)
+;
+
+--Modify Negotiation (ID: 1269)
+insert into KRIM_ROLE_PERM_T (ROLE_PERM_ID,OBJ_ID,VER_NBR,ACTV_IND,ROLE_ID,PERM_ID) 
+  values (KRIM_ROLE_PERM_ID_S.NEXTVAL, SYS_GUID(), 1, 'Y', 1238, 1269)
+;
+
+--Create Activities (ID: 1270)
+insert into KRIM_ROLE_PERM_T (ROLE_PERM_ID,OBJ_ID,VER_NBR,ACTV_IND,ROLE_ID,PERM_ID) 
+  values (KRIM_ROLE_PERM_ID_S.NEXTVAL, SYS_GUID(), 1, 'Y', 1238, 1270)
+;
+
+--Modify Activities (ID: 1271)
+insert into KRIM_ROLE_PERM_T (ROLE_PERM_ID,OBJ_ID,VER_NBR,ACTV_IND,ROLE_ID,PERM_ID) 
+  values (KRIM_ROLE_PERM_ID_S.NEXTVAL, SYS_GUID(), 1, 'Y', 1238, 1271)
+;
+
+--Modify Activities (ID: 1272)
+insert into KRIM_ROLE_PERM_T (ROLE_PERM_ID,OBJ_ID,VER_NBR,ACTV_IND,ROLE_ID,PERM_ID) 
+  values (KRIM_ROLE_PERM_ID_S.NEXTVAL, SYS_GUID(), 1, 'Y', 1238, 1272)
+;
+
+
+-- ====================================================================================================================
+-- 38. UAR-1159: Add 'View Negotiation' permission 1273 to Role 1239 'Negotiation View' and also change namespace to 'KC-NEGOTIATION' 
+-- ====================================================================================================================
+
+--View Negotiation (ID: 1272)
+insert into KRIM_ROLE_PERM_T (ROLE_PERM_ID,OBJ_ID,VER_NBR,ACTV_IND,ROLE_ID,PERM_ID) 
+  values (KRIM_ROLE_PERM_ID_S.NEXTVAL, SYS_GUID(), 1, 'Y', 1239, 1272)
+;
+
+-- change role namespace 
+update KRIM_ROLE_T set NMSPC_CD='KC-NEGOTIATION' where (ROLE_ID=1239 AND ROLE_NM = 'Negotiation View')
 ;
 
