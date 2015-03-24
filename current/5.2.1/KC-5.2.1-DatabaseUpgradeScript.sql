@@ -1019,3 +1019,42 @@ insert into KRIM_ROLE_PERM_T (ROLE_PERM_ID,OBJ_ID,VER_NBR,ACTV_IND,ROLE_ID,PERM_
 update KRIM_ROLE_T set NMSPC_CD='KC-NEGOTIATION' where (ROLE_ID=1239 AND ROLE_NM = 'Negotiation View')
 ;
 
+
+-- ====================================================================================================================
+-- 39. UAR-1161: Need to add 'Negotiation Viewer' role (ID#1239) to all current 'Dept Management' role members
+-- ====================================================================================================================
+
+insert into krim_role_mbr_t ( role_mbr_id, mbr_id, ver_nbr, obj_id, role_id, mbr_typ_cd, actv_frm_dt, actv_to_dt ) 
+    with TMP as (select DISTINCT KRIM_ROLE_MBR_T.MBR_ID MBRID FROM KRIM_ROLE_MBR_T WHERE ( ROLE_ID = '1213' AND ACTV_TO_DT IS NULL))
+  select KRIM_ROLE_MBR_ID_S.NEXTVAL, MBRID, 1, SYS_GUID(), 1239, 'P', null, null
+  from TMP
+;
+
+
+
+
+-- ====================================================================================================================
+-- 41. UAR-833: Update ALL 'Final' to Y and 'Private Comment' to N flags for protocol Minute entries
+-- ====================================================================================================================
+
+--set ALL Final to Y
+UPDATE COMM_SCHEDULE_MINUTES SET FINAL_FLAG = 'Y'
+  WHERE FINAL_FLAG = 'N'
+;
+
+
+--set ALL Private Comment Flag to N
+UPDATE COMM_SCHEDULE_MINUTES SET PRIVATE_COMMENT_FLAG = 'N' 
+  WHERE PRIVATE_COMMENT_FLAG = 'Y'
+;
+
+
+
+-- ====================================================================================================================
+-- 42. UAR-993: Create parameter for Negotiation migration with 'N'
+-- ====================================================================================================================
+
+-- Insert negotiation migration enabling parameter
+INSERT INTO "KRAOWNER"."KRCR_PARM_T" (APPL_ID, NMSPC_CD, CMPNT_CD, PARM_NM, VER_NBR, PARM_TYP_CD, VAL, PARM_DESC_TXT, EVAL_OPRTR_CD, OBJ_ID)
+  VALUES ('KC', 'KC-NEGOTIATION', 'Negotiation', 'NEGOTIATION_MIGRATION_ENABLED', '1', 'CONFG', 'N', 'Enable Negotiation Log Migration', 'A', sys_guid())
+;
