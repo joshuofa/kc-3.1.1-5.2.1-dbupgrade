@@ -1007,26 +1007,26 @@ insert into KRIM_ROLE_PERM_T (ROLE_PERM_ID,OBJ_ID,VER_NBR,ACTV_IND,ROLE_ID,PERM_
 
 
 -- ====================================================================================================================
--- 38. UAR-1159: Add 'View Negotiation' permission 1273 to Role 1239 'Negotiation View' and also change namespace to 'KC-NEGOTIATION' 
+-- 38. UAR-1159: Add 'View Negotiation' permission 1273 to Role 1500 'Negotiation View' and also change namespace to 'KC-NEGOTIATION' 
 -- ====================================================================================================================
 
 --View Negotiation (ID: 1272)
 insert into KRIM_ROLE_PERM_T (ROLE_PERM_ID,OBJ_ID,VER_NBR,ACTV_IND,ROLE_ID,PERM_ID) 
-  values (KRIM_ROLE_PERM_ID_S.NEXTVAL, SYS_GUID(), 1, 'Y', 1239, 1273)
+  values (KRIM_ROLE_PERM_ID_S.NEXTVAL, SYS_GUID(), 1, 'Y', 1500, 1273)
 ;
 
 -- change role namespace 
-update KRIM_ROLE_T set NMSPC_CD='KC-NEGOTIATION' where (ROLE_ID=1239 AND ROLE_NM = 'Negotiation View')
+update KRIM_ROLE_T set NMSPC_CD='KC-NEGOTIATION' where (ROLE_ID=1500 AND ROLE_NM = 'Negotiation View')
 ;
 
 
 -- ====================================================================================================================
--- 39. UAR-1161: Need to add 'Negotiation Viewer' role (ID#1239) to all current 'Dept Management' role members
+-- 39. UAR-1161: Need to add 'Negotiation Viewer' role (ID#1500) to all current 'Dept Management' role members
 -- ====================================================================================================================
 
 insert into krim_role_mbr_t ( role_mbr_id, mbr_id, ver_nbr, obj_id, role_id, mbr_typ_cd, actv_frm_dt, actv_to_dt ) 
     with TMP as (select DISTINCT KRIM_ROLE_MBR_T.MBR_ID MBRID FROM KRIM_ROLE_MBR_T WHERE ( ROLE_ID = '1213' AND ACTV_TO_DT IS NULL))
-  select KRIM_ROLE_MBR_ID_S.NEXTVAL, MBRID, 1, SYS_GUID(), 1239, 'P', null, null
+  select KRIM_ROLE_MBR_ID_S.NEXTVAL, MBRID, 1, SYS_GUID(), 1500, 'P', null, null
   from TMP
 ;
 
@@ -1054,7 +1054,22 @@ UPDATE COMM_SCHEDULE_MINUTES SET PRIVATE_COMMENT_FLAG = 'N'
 -- 42. UAR-993: Create parameter for Negotiation migration with 'N'
 -- ====================================================================================================================
 
+--Insert Negotiation Component
+INSERT INTO KRCR_CMPNT_T (NMSPC_CD, CMPNT_CD, VER_NBR, NM, ACTV_IND, OBJ_ID)
+  VALUES ('KC-NEGOTIATION', 'Negotiation', 1, 'Negotiation', 'Y', sys_guid())
+;
+
 -- Insert negotiation migration enabling parameter
-INSERT INTO "KRAOWNER"."KRCR_PARM_T" (APPL_ID, NMSPC_CD, CMPNT_CD, PARM_NM, VER_NBR, PARM_TYP_CD, VAL, PARM_DESC_TXT, EVAL_OPRTR_CD, OBJ_ID)
+INSERT INTO KRCR_PARM_T (APPL_ID, NMSPC_CD, CMPNT_CD, PARM_NM, VER_NBR, PARM_TYP_CD, VAL, PARM_DESC_TXT, EVAL_OPRTR_CD, OBJ_ID)
   VALUES ('KC', 'KC-NEGOTIATION', 'Negotiation', 'NEGOTIATION_MIGRATION_ENABLED', '1', 'CONFG', 'N', 'Enable Negotiation Log Migration', 'A', sys_guid())
 ;
+
+
+-- ====================================================================================================================
+-- 43.  Change parameter: LOOKUP_CONTACT_EMAIL to have parameter_value = kuali_coeus@list.arizona.edu
+-- ====================================================================================================================
+
+UPDATE KRCR_PARM_T SET VAL='kuali_coeus@list.arizona.edu' WHERE PARM_NM='LOOKUP_CONTACT_EMAIL'
+;
+
+
