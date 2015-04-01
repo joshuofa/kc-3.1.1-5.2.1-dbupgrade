@@ -898,12 +898,12 @@ WHERE EXISTS (SELECT EPS_PROPOSAL.*,NARRATIVE.*
 
 
 -- ====================================================================================================================
--- 33. Add Backdoor permission to - UA SPS Maintenance (Role ID: 1206), IRB Administrator (Role ID: 1119), CRS Management (Role ID: 1238)
+-- 33. Add Backdoor permission to - SPS Management (Role ID: 1221), IRB Administrator (Role ID: 1119), CRS Management (Role ID: 1238)
 -- ====================================================================================================================
  
- -- UA SPS Maintenance (Role ID: 1206)
+ -- SPS Management Role (1221)
  insert into KRIM_ROLE_PERM_T (ROLE_PERM_ID,OBJ_ID,VER_NBR,ACTV_IND,ROLE_ID,PERM_ID) 
-  values (KRIM_ROLE_PERM_ID_S.NEXTVAL, SYS_GUID(), 1, 'Y', 1206,
+  values (KRIM_ROLE_PERM_ID_S.NEXTVAL, SYS_GUID(), 1, 'Y', 1221,
   	(select PERM_ID from KRIM_PERM_T where NM='Use Backdoor Log In Kuali Portal'))
  ;
 
