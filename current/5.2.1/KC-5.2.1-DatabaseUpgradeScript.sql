@@ -214,7 +214,7 @@ update questionnaire set IS_FINAL='N' where NAME='GG S2S Forms';
 
 -- insert the questionnaire for Proposal Questions (ID=3333)
 Insert into QUESTIONNAIRE (QUESTIONNAIRE_REF_ID,QUESTIONNAIRE_ID,SEQUENCE_NUMBER,NAME,DESCRIPTION,UPDATE_TIMESTAMP,UPDATE_USER,IS_FINAL,VER_NBR,OBJ_ID,FILE_NAME,TEMPLATE,DOCUMENT_NUMBER) 
-values (3333,3333,1,'Proposal Questions','Proposal Questions',CURRENT_TIMESTAMP ,'admin','Y',1, sys_guid(), null, EMPTY_CLOB(), null);
+values (3333,3333,1,'Proposal Questions','Proposal Questions',CURRENT_TIMESTAMP ,'admin','Y',1, sys_guid(), null, null, null);
 
 
 -- insert the questionnaire usage for Proposal Questions (ID=3333)
