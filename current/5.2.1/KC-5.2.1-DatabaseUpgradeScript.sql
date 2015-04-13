@@ -5,7 +5,7 @@ SET DEFINE OFF
 -- 2)  Activate Role 'Award Modifier' (1124); Change 'Active?' flag to Yes. 
 -- ====================================================================================================================
 
-update krim_role_t set ACTV_IND='Y' where role_id='1124' and role_nm='Award Modifier'
+update KRIM_ROLE_T set ACTV_IND='Y' where NMSPC_CD='KC-AWARD' and ROLE_NM='Award Modifier'
 ;
 
 -- ====================================================================================================================
@@ -14,37 +14,58 @@ update krim_role_t set ACTV_IND='Y' where role_id='1124' and role_nm='Award Modi
 
 -- 'Modify Award Report Tracking' (Permission ID: 1274) 
 insert into krim_role_perm_t (ROLE_PERM_ID, OBJ_ID, VER_NBR, ROLE_ID, PERM_ID, ACTV_IND)
-values (KRIM_ROLE_PERM_ID_S.nextval, sys_guid(), 1, 1221, 1274, 'Y')
+  values (KRIM_ROLE_PERM_ID_S.nextval, sys_guid(), 1, 
+    (select ROLE_ID from KRIM_ROLE_T where ROLE_NM='SPS Management' and NMSPC_CD='KC-ADM'),
+    (select PERM_ID from KRIM_PERM_T where NM='Modify Award Report Tracking' and NMSPC_CD='KC-AWARD'),
+    'Y')
 ;
 
 -- 'Modify Proposal Rates' (Permission ID: 1254) 
 insert into krim_role_perm_t (ROLE_PERM_ID, OBJ_ID, VER_NBR, ROLE_ID, PERM_ID, ACTV_IND)
-values (KRIM_ROLE_PERM_ID_S.nextval, sys_guid(), 1, 1221, 1254, 'Y')
+  values (KRIM_ROLE_PERM_ID_S.nextval, sys_guid(), 1, 
+    (select ROLE_ID from KRIM_ROLE_T where ROLE_NM='SPS Management' and NMSPC_CD='KC-ADM'),
+    (select PERM_ID from KRIM_PERM_T where NM='Modify Proposal Rates' and NMSPC_CD='KC-PD'),
+    'Y')
 ;
 
 -- Create Negotiation (1268) 
 insert into krim_role_perm_t (ROLE_PERM_ID, OBJ_ID, VER_NBR, ROLE_ID, PERM_ID, ACTV_IND)
-values (KRIM_ROLE_PERM_ID_S.nextval, sys_guid(), 1, 1221, 1268, 'Y')
+  values (KRIM_ROLE_PERM_ID_S.nextval, sys_guid(), 1, 
+   (select ROLE_ID from KRIM_ROLE_T where ROLE_NM='SPS Management' and NMSPC_CD='KC-ADM'),
+   (select PERM_ID from KRIM_PERM_T where NM='CREATE NEGOTIATION' and NMSPC_CD='KC-NEGOTIATION'), 
+   'Y')
 ;
 
 -- Modify Negotiation (1269) 
 insert into krim_role_perm_t (ROLE_PERM_ID, OBJ_ID, VER_NBR, ROLE_ID, PERM_ID, ACTV_IND)
-values (KRIM_ROLE_PERM_ID_S.nextval, sys_guid(), 1, 1221, 1269, 'Y')
+  values (KRIM_ROLE_PERM_ID_S.nextval, sys_guid(), 1, 
+   (select ROLE_ID from KRIM_ROLE_T where ROLE_NM='SPS Management' and NMSPC_CD='KC-ADM'),
+   (select PERM_ID from KRIM_PERM_T where NM='MODIFY NEGOTIATION' and NMSPC_CD='KC-NEGOTIATION'),
+   'Y')
 ;
 
 -- Modify Negotiation (1270) 
 insert into krim_role_perm_t (ROLE_PERM_ID, OBJ_ID, VER_NBR, ROLE_ID, PERM_ID, ACTV_IND)
-values (KRIM_ROLE_PERM_ID_S.nextval, sys_guid(), 1, 1221, 1270, 'Y')
+  values (KRIM_ROLE_PERM_ID_S.nextval, sys_guid(), 1, 
+   (select ROLE_ID from KRIM_ROLE_T where ROLE_NM='SPS Management' and NMSPC_CD='KC-ADM'),
+   (select PERM_ID from KRIM_PERM_T where NM='CREATE ACTIVITIES' and NMSPC_CD='KC-NEGOTIATION'),
+   'Y')
 ;
 
 -- Modify Activities (1271) 
 insert into krim_role_perm_t (ROLE_PERM_ID, OBJ_ID, VER_NBR, ROLE_ID, PERM_ID, ACTV_IND)
-values (KRIM_ROLE_PERM_ID_S.nextval, sys_guid(), 1, 1221, 1271, 'Y')
+  values (KRIM_ROLE_PERM_ID_S.nextval, sys_guid(), 1, 
+    (select ROLE_ID from KRIM_ROLE_T where ROLE_NM='SPS Management' and NMSPC_CD='KC-ADM'), 
+    (select PERM_ID from KRIM_PERM_T where NM='MODIFY ACTIVITIES' and NMSPC_CD='KC-NEGOTIATION'),
+    'Y')
 ;
 
 -- View Negotiation - Unrestricted (1272) 
 insert into krim_role_perm_t (ROLE_PERM_ID, OBJ_ID, VER_NBR, ROLE_ID, PERM_ID, ACTV_IND)
-values (KRIM_ROLE_PERM_ID_S.nextval, sys_guid(), 1, 1221, 1272, 'Y')
+  values (KRIM_ROLE_PERM_ID_S.nextval, sys_guid(), 1, 
+   (select ROLE_ID from KRIM_ROLE_T where ROLE_NM='SPS Management' and NMSPC_CD='KC-ADM'), 
+   (select PERM_ID from KRIM_PERM_T where NM='VIEW NEGOTIATION - UNRESTRICTED' and NMSPC_CD='KC-NEGOTIATION'),
+   'Y')
 ;
 
 
@@ -422,11 +443,12 @@ update KRCR_PARM_T set val='Approval indicates that information in the online pr
 -- ====================================================================================================================
 
 insert into krim_role_mbr_t ( role_mbr_id, ver_nbr, obj_id, role_id, mbr_id, mbr_typ_cd, actv_frm_dt, actv_to_dt ) 
-  select KRIM_ROLE_MBR_ID_S.NEXTVAL, 1, SYS_GUID(), '1259', prncpl_id, 'P', null, null 
+  select KRIM_ROLE_MBR_ID_S.NEXTVAL, 1, SYS_GUID(), 
+    (select ROLE_ID from KRIM_ROLE_T where ROLE_NM='Kuali Rules Management System Administrator' and NMSPC_CD='KR-RULE'),
+    prncpl_id, 'P', null, null 
   from krim_entity_cache_t 
   where prncpl_nm = 'peck'
 ;
-
 
 
 -- ====================================================================================================================
@@ -687,93 +709,148 @@ insert into QUESTION_YNQ_MAP (QUESTION_REF_ID, YNQ_QUESTION_ID)
 
 --'Add Unit' (1296)
 insert into krim_role_perm_t (ROLE_PERM_ID, OBJ_ID, VER_NBR, ROLE_ID, PERM_ID, ACTV_IND)
-  values (KRIM_ROLE_PERM_ID_S.nextval, sys_guid(), 1, 1206, 1296, 'Y')
+  values (KRIM_ROLE_PERM_ID_S.nextval, sys_guid(), 1, 
+    (select ROLE_ID from KRIM_ROLE_T where ROLE_NM='UA SPS Maintenance' and NMSPC_CD='KC-M'), 
+    (select PERM_ID from KRIM_PERM_T where NM='Add Unit' and NMSPC_CD='KC-UNT'),
+    'Y')
 ;
 
 --'Modify Unit' (1297)
 insert into krim_role_perm_t (ROLE_PERM_ID, OBJ_ID, VER_NBR, ROLE_ID, PERM_ID, ACTV_IND)
-  values (KRIM_ROLE_PERM_ID_S.nextval, sys_guid(), 1, 1206, 1297, 'Y')
+  values (KRIM_ROLE_PERM_ID_S.nextval, sys_guid(), 1, 
+    (select ROLE_ID from KRIM_ROLE_T where ROLE_NM='UA SPS Maintenance' and NMSPC_CD='KC-M'), 
+    (select PERM_ID from KRIM_PERM_T where NM='Modify Unit' and NMSPC_CD='KC-UNT'),
+    'Y')
 ;
 
 --'Create Award Sponsor Template' (1298)
 insert into krim_role_perm_t (ROLE_PERM_ID, OBJ_ID, VER_NBR, ROLE_ID, PERM_ID, ACTV_IND)
-  values (KRIM_ROLE_PERM_ID_S.nextval, sys_guid(), 1, 1206, 1298, 'Y')
+  values (KRIM_ROLE_PERM_ID_S.nextval, sys_guid(), 1,  
+    (select ROLE_ID from KRIM_ROLE_T where ROLE_NM='UA SPS Maintenance' and NMSPC_CD='KC-M'), 
+    (select PERM_ID from KRIM_PERM_T where NM='Create Award Sponsor Template' and NMSPC_CD='KC-AWARD'),
+    'Y')
 ;
 
 --'Modify Award Sponsor Template' (1299)
 insert into krim_role_perm_t (ROLE_PERM_ID, OBJ_ID, VER_NBR, ROLE_ID, PERM_ID, ACTV_IND)
-  values (KRIM_ROLE_PERM_ID_S.nextval, sys_guid(), 1, 1206, 1299, 'Y')
+  values (KRIM_ROLE_PERM_ID_S.nextval, sys_guid(), 1, 
+    (select ROLE_ID from KRIM_ROLE_T where ROLE_NM='UA SPS Maintenance' and NMSPC_CD='KC-M'), 
+    (select PERM_ID from KRIM_PERM_T where NM='Modify Award Sponsor Template' and NMSPC_CD='KC-AWARD'), 
+    'Y')
 ;
 
 --'View Award Sponsor Template' (1300)
 insert into krim_role_perm_t (ROLE_PERM_ID, OBJ_ID, VER_NBR, ROLE_ID, PERM_ID, ACTV_IND)
-  values (KRIM_ROLE_PERM_ID_S.nextval, sys_guid(), 1, 1206, 1300, 'Y')
+  values (KRIM_ROLE_PERM_ID_S.nextval, sys_guid(), 1, 
+    (select ROLE_ID from KRIM_ROLE_T where ROLE_NM='UA SPS Maintenance' and NMSPC_CD='KC-M'), 
+    (select PERM_ID from KRIM_PERM_T where NM='View Award Sponsor Template' and NMSPC_CD='KC-AWARD'), 
+    'Y')
 ;
 
 --'Add Sponsor Hierarchy' (1303)
 insert into krim_role_perm_t (ROLE_PERM_ID, OBJ_ID, VER_NBR, ROLE_ID, PERM_ID, ACTV_IND)
-  values (KRIM_ROLE_PERM_ID_S.nextval, sys_guid(), 1, 1206, 1303, 'Y')
+  values (KRIM_ROLE_PERM_ID_S.nextval, sys_guid(), 1,
+    (select ROLE_ID from KRIM_ROLE_T where ROLE_NM='UA SPS Maintenance' and NMSPC_CD='KC-M'), 
+    (select PERM_ID from KRIM_PERM_T where NM='Add Sponsor Hierarchy' and NMSPC_CD='KC-SYS'), 
+    'Y')
 ;
 
 --'Modify Sponsor Hierarchy' (1304)
 insert into krim_role_perm_t (ROLE_PERM_ID, OBJ_ID, VER_NBR, ROLE_ID, PERM_ID, ACTV_IND)
-  values (KRIM_ROLE_PERM_ID_S.nextval, sys_guid(), 1, 1206, 1304, 'Y')
+  values (KRIM_ROLE_PERM_ID_S.nextval, sys_guid(), 1,
+    (select ROLE_ID from KRIM_ROLE_T where ROLE_NM='UA SPS Maintenance' and NMSPC_CD='KC-M'), 
+    (select PERM_ID from KRIM_PERM_T where NM='Modify Sponsor Hierarchy' and NMSPC_CD='KC-SYS'), 
+    'Y')
 ;
 
 --'Delete Sponsor Hierarchy' (1305)
 insert into krim_role_perm_t (ROLE_PERM_ID, OBJ_ID, VER_NBR, ROLE_ID, PERM_ID, ACTV_IND)
-  values (KRIM_ROLE_PERM_ID_S.nextval, sys_guid(), 1, 1206, 1305, 'Y')
+  values (KRIM_ROLE_PERM_ID_S.nextval, sys_guid(), 1, 
+    (select ROLE_ID from KRIM_ROLE_T where ROLE_NM='UA SPS Maintenance' and NMSPC_CD='KC-M'), 
+    (select PERM_ID from KRIM_PERM_T where NM='Delete Sponsor Hierarchy' and NMSPC_CD='KC-SYS'), 
+    'Y')
 ;
 
 --'Add Sponsor' (1306)
 insert into krim_role_perm_t (ROLE_PERM_ID, OBJ_ID, VER_NBR, ROLE_ID, PERM_ID, ACTV_IND)
-  values (KRIM_ROLE_PERM_ID_S.nextval, sys_guid(), 1, 1206, 1306, 'Y')
+  values (KRIM_ROLE_PERM_ID_S.nextval, sys_guid(), 1, 
+    (select ROLE_ID from KRIM_ROLE_T where ROLE_NM='UA SPS Maintenance' and NMSPC_CD='KC-M'), 
+    (select PERM_ID from KRIM_PERM_T where NM='Add Sponsor' and NMSPC_CD='KC-UNT'), 
+    'Y')
 ;
 
 --'Modify Sponsor' (1307)
 insert into krim_role_perm_t (ROLE_PERM_ID, OBJ_ID, VER_NBR, ROLE_ID, PERM_ID, ACTV_IND)
-  values (KRIM_ROLE_PERM_ID_S.nextval, sys_guid(), 1, 1206, 1307, 'Y')
+  values (KRIM_ROLE_PERM_ID_S.nextval, sys_guid(), 1,  
+    (select ROLE_ID from KRIM_ROLE_T where ROLE_NM='UA SPS Maintenance' and NMSPC_CD='KC-M'), 
+    (select PERM_ID from KRIM_PERM_T where NM='Modify Sponsor' and NMSPC_CD='KC-UNT'), 
+    'Y')
 ;
 
 -- 'Add Address Book' (1308) 
 insert into krim_role_perm_t (ROLE_PERM_ID, OBJ_ID, VER_NBR, ROLE_ID, PERM_ID, ACTV_IND)
-  values (KRIM_ROLE_PERM_ID_S.nextval, sys_guid(), 1, 1206, 1308, 'Y')
+  values (KRIM_ROLE_PERM_ID_S.nextval, sys_guid(), 1, 
+    (select ROLE_ID from KRIM_ROLE_T where ROLE_NM='UA SPS Maintenance' and NMSPC_CD='KC-M'), 
+    (select PERM_ID from KRIM_PERM_T where NM='Add Address Book' and NMSPC_CD='KC-UNT'), 
+    'Y')
 ;
 
 -- 'Modify Address Book' (1309) 
 insert into krim_role_perm_t (ROLE_PERM_ID, OBJ_ID, VER_NBR, ROLE_ID, PERM_ID, ACTV_IND)
-  values (KRIM_ROLE_PERM_ID_S.nextval, sys_guid(), 1, 1206, 1309, 'Y')
+  values (KRIM_ROLE_PERM_ID_S.nextval, sys_guid(), 1,
+    (select ROLE_ID from KRIM_ROLE_T where ROLE_NM='UA SPS Maintenance' and NMSPC_CD='KC-M'), 
+    (select PERM_ID from KRIM_PERM_T where NM='Modify Address Book' and NMSPC_CD='KC-UNT'), 
+    'Y')
 ;
 
 -- 'Delete Address Book' (1310) 
 insert into krim_role_perm_t (ROLE_PERM_ID, OBJ_ID, VER_NBR, ROLE_ID, PERM_ID, ACTV_IND)
-  values (KRIM_ROLE_PERM_ID_S.nextval, sys_guid(), 1, 1206, 1310, 'Y')
+  values (KRIM_ROLE_PERM_ID_S.nextval, sys_guid(), 1, 
+    (select ROLE_ID from KRIM_ROLE_T where ROLE_NM='UA SPS Maintenance' and NMSPC_CD='KC-M'), 
+    (select PERM_ID from KRIM_PERM_T where NM='Delete Address Book' and NMSPC_CD='KC-UNT'), 
+    'Y')
 ;
 
 -- 'View Address Book' (1352) 
 insert into krim_role_perm_t (ROLE_PERM_ID, OBJ_ID, VER_NBR, ROLE_ID, PERM_ID, ACTV_IND)
-  values (KRIM_ROLE_PERM_ID_S.nextval, sys_guid(), 1, 1206, 1352, 'Y')
+  values (KRIM_ROLE_PERM_ID_S.nextval, sys_guid(), 1, 
+    (select ROLE_ID from KRIM_ROLE_T where ROLE_NM='UA SPS Maintenance' and NMSPC_CD='KC-M'), 
+    (select PERM_ID from KRIM_PERM_T where NM='View Address Book' and NMSPC_CD='KC-UNT'), 
+    'Y')
 ;
 
 -- 'Modify Organization' (1311)
 insert into krim_role_perm_t (ROLE_PERM_ID, OBJ_ID, VER_NBR, ROLE_ID, PERM_ID, ACTV_IND)
-  values (KRIM_ROLE_PERM_ID_S.nextval, sys_guid(), 1, 1206, 1311, 'Y')
-; 
+  values (KRIM_ROLE_PERM_ID_S.nextval, sys_guid(), 1, 
+    (select ROLE_ID from KRIM_ROLE_T where ROLE_NM='UA SPS Maintenance' and NMSPC_CD='KC-M'), 
+    (select PERM_ID from KRIM_PERM_T where NM='Modify Organization' and NMSPC_CD='KC-UNT'), 
+    'Y')
+;
 
 -- 'Add Organization' (1312) 
 insert into krim_role_perm_t (ROLE_PERM_ID, OBJ_ID, VER_NBR, ROLE_ID, PERM_ID, ACTV_IND)
-  values (KRIM_ROLE_PERM_ID_S.nextval, sys_guid(), 1, 1206, 1312, 'Y')
+  values (KRIM_ROLE_PERM_ID_S.nextval, sys_guid(), 1, 
+    (select ROLE_ID from KRIM_ROLE_T where ROLE_NM='UA SPS Maintenance' and NMSPC_CD='KC-M'), 
+    (select PERM_ID from KRIM_PERM_T where NM='Add Organization' and NMSPC_CD='KC-UNT'), 
+    'Y')
 ; 
+
 
 -- 'Delete Organization' (1313) 
 insert into krim_role_perm_t (ROLE_PERM_ID, OBJ_ID, VER_NBR, ROLE_ID, PERM_ID, ACTV_IND)
-  values (KRIM_ROLE_PERM_ID_S.nextval, sys_guid(), 1, 1206, 1313, 'Y')
-; 
+  values (KRIM_ROLE_PERM_ID_S.nextval, sys_guid(), 1, 
+    (select ROLE_ID from KRIM_ROLE_T where ROLE_NM='UA SPS Maintenance' and NMSPC_CD='KC-M'), 
+    (select PERM_ID from KRIM_PERM_T where NM='Delete Organization' and NMSPC_CD='KC-UNT'), 
+    'Y')
+;
 
 -- 'View Organization' (1353)
 insert into krim_role_perm_t (ROLE_PERM_ID, OBJ_ID, VER_NBR, ROLE_ID, PERM_ID, ACTV_IND)
-  values (KRIM_ROLE_PERM_ID_S.nextval, sys_guid(), 1, 1206, 1353, 'Y')
-; 
+  values (KRIM_ROLE_PERM_ID_S.nextval, sys_guid(), 1, 
+    (select ROLE_ID from KRIM_ROLE_T where ROLE_NM='UA SPS Maintenance' and NMSPC_CD='KC-M'), 
+    (select PERM_ID from KRIM_PERM_T where NM='View Organization' and NMSPC_CD='KC-UNT'), 
+    'Y')
+;
 
 
 -- ====================================================================================================================
@@ -903,19 +980,22 @@ WHERE EXISTS (SELECT EPS_PROPOSAL.*,NARRATIVE.*
  
  -- SPS Management Role (1221)
  insert into KRIM_ROLE_PERM_T (ROLE_PERM_ID,OBJ_ID,VER_NBR,ACTV_IND,ROLE_ID,PERM_ID) 
-  values (KRIM_ROLE_PERM_ID_S.NEXTVAL, SYS_GUID(), 1, 'Y', 1221,
+  values (KRIM_ROLE_PERM_ID_S.NEXTVAL, SYS_GUID(), 1, 'Y', 
+	(select ROLE_ID from KRIM_ROLE_T where ROLE_NM='SPS Management' and NMSPC_CD='KC-ADM'),
   	(select PERM_ID from KRIM_PERM_T where NM='Use Backdoor Log In Kuali Portal'))
  ;
 
  -- IRB Administrator (Role ID: 1119)
  insert into KRIM_ROLE_PERM_T (ROLE_PERM_ID,OBJ_ID,VER_NBR,ACTV_IND,ROLE_ID,PERM_ID) 
-  values (KRIM_ROLE_PERM_ID_S.NEXTVAL, SYS_GUID(), 1, 'Y', 1119,
+  values (KRIM_ROLE_PERM_ID_S.NEXTVAL, SYS_GUID(), 1, 'Y', 
+	(select ROLE_ID from KRIM_ROLE_T where ROLE_NM='IRB Administrator' and NMSPC_CD='KC-UNT'),
   	(select PERM_ID from KRIM_PERM_T where NM='Use Backdoor Log In Kuali Portal'))
  ;
 
  -- CRS Management (Role ID: 1238)
  insert into KRIM_ROLE_PERM_T (ROLE_PERM_ID,OBJ_ID,VER_NBR,ACTV_IND,ROLE_ID,PERM_ID) 
-  values (KRIM_ROLE_PERM_ID_S.NEXTVAL, SYS_GUID(), 1, 'Y', 1238,
+  values (KRIM_ROLE_PERM_ID_S.NEXTVAL, SYS_GUID(), 1, 'Y', 
+	(select ROLE_ID from KRIM_ROLE_T where ROLE_NM='CRS Management' and NMSPC_CD='KC-ADM'),
   	(select PERM_ID from KRIM_PERM_T where NM='Use Backdoor Log In Kuali Portal'))
  ;
 
@@ -960,17 +1040,26 @@ update KRCR_PARM_T set val='Y' where parm_nm='irb.protocol.institute.proposal.li
 
 --View Proposal Permission (ID: 1021)
 insert into KRIM_ROLE_PERM_T (ROLE_PERM_ID,OBJ_ID,VER_NBR,ACTV_IND,ROLE_ID,PERM_ID) 
-  values (KRIM_ROLE_PERM_ID_S.NEXTVAL, SYS_GUID(), 1, 'Y', 1119, 1021)
+  values (KRIM_ROLE_PERM_ID_S.NEXTVAL, SYS_GUID(), 1, 'Y', 
+    (select ROLE_ID from KRIM_ROLE_T where ROLE_NM='IRB Administrator' and NMSPC_CD='KC-UNT'),
+    (select perm_id from KRIM_PERM_T where nm='View Proposal' and NMSPC_CD='KC-PD')
+  )
 ;
 
 --View Award Permission (ID: 1029)
 insert into KRIM_ROLE_PERM_T (ROLE_PERM_ID,OBJ_ID,VER_NBR,ACTV_IND,ROLE_ID,PERM_ID) 
-  values (KRIM_ROLE_PERM_ID_S.NEXTVAL, SYS_GUID(), 1, 'Y', 1119, 1029)
+  values (KRIM_ROLE_PERM_ID_S.NEXTVAL, SYS_GUID(), 1, 'Y',
+    (select ROLE_ID from KRIM_ROLE_T where ROLE_NM='IRB Administrator' and NMSPC_CD='KC-UNT'), 
+    (select perm_id from KRIM_PERM_T where nm='View Award' and NMSPC_CD='KC-AWARD')
+  )
 ;
 
 --Open Institutional Proposal (ID: 1114)
 insert into KRIM_ROLE_PERM_T (ROLE_PERM_ID,OBJ_ID,VER_NBR,ACTV_IND,ROLE_ID,PERM_ID) 
-  values (KRIM_ROLE_PERM_ID_S.NEXTVAL, SYS_GUID(), 1, 'Y', 1119, 1114)
+  values (KRIM_ROLE_PERM_ID_S.NEXTVAL, SYS_GUID(), 1, 'Y', 
+    (select ROLE_ID from KRIM_ROLE_T where ROLE_NM='IRB Administrator' and NMSPC_CD='KC-UNT'),
+    (select perm_id from KRIM_PERM_T where nm='Open Institutional Proposal' and NMSPC_CD='KC-IP')
+  )
 ;
 
 
@@ -982,27 +1071,42 @@ insert into KRIM_ROLE_PERM_T (ROLE_PERM_ID,OBJ_ID,VER_NBR,ACTV_IND,ROLE_ID,PERM_
 
 --Create Negotiation (ID: 1268)
 insert into KRIM_ROLE_PERM_T (ROLE_PERM_ID,OBJ_ID,VER_NBR,ACTV_IND,ROLE_ID,PERM_ID) 
-  values (KRIM_ROLE_PERM_ID_S.NEXTVAL, SYS_GUID(), 1, 'Y', 1238, 1268)
+  values (KRIM_ROLE_PERM_ID_S.NEXTVAL, SYS_GUID(), 1, 'Y',  
+    (select ROLE_ID from KRIM_ROLE_T where ROLE_NM='CRS Management' and NMSPC_CD='KC-ADM'),	
+    (select PERM_ID from KRIM_PERM_T where NMSPC_CD='KC-NEGOTIATION' and NM='CREATE NEGOTIATION')
+  )
 ;
 
 --Modify Negotiation (ID: 1269)
 insert into KRIM_ROLE_PERM_T (ROLE_PERM_ID,OBJ_ID,VER_NBR,ACTV_IND,ROLE_ID,PERM_ID) 
-  values (KRIM_ROLE_PERM_ID_S.NEXTVAL, SYS_GUID(), 1, 'Y', 1238, 1269)
+  values (KRIM_ROLE_PERM_ID_S.NEXTVAL, SYS_GUID(), 1, 'Y', 
+    (select ROLE_ID from KRIM_ROLE_T where ROLE_NM='CRS Management' and NMSPC_CD='KC-ADM'),
+    (select PERM_ID from KRIM_PERM_T where NMSPC_CD='KC-NEGOTIATION' and NM='MODIFY NEGOTIATION')
+  )
 ;
 
 --Create Activities (ID: 1270)
 insert into KRIM_ROLE_PERM_T (ROLE_PERM_ID,OBJ_ID,VER_NBR,ACTV_IND,ROLE_ID,PERM_ID) 
-  values (KRIM_ROLE_PERM_ID_S.NEXTVAL, SYS_GUID(), 1, 'Y', 1238, 1270)
+  values (KRIM_ROLE_PERM_ID_S.NEXTVAL, SYS_GUID(), 1, 'Y', 
+    (select ROLE_ID from KRIM_ROLE_T where ROLE_NM='CRS Management' and NMSPC_CD='KC-ADM'),
+    (select perm_id from KRIM_PERM_T where nm='CREATE ACTIVITIES' and NMSPC_CD='KC-NEGOTIATION')
+  )
 ;
 
 --Modify Activities (ID: 1271)
 insert into KRIM_ROLE_PERM_T (ROLE_PERM_ID,OBJ_ID,VER_NBR,ACTV_IND,ROLE_ID,PERM_ID) 
-  values (KRIM_ROLE_PERM_ID_S.NEXTVAL, SYS_GUID(), 1, 'Y', 1238, 1271)
+  values (KRIM_ROLE_PERM_ID_S.NEXTVAL, SYS_GUID(), 1, 'Y', 
+    (select ROLE_ID from KRIM_ROLE_T where ROLE_NM='CRS Management' and NMSPC_CD='KC-ADM'),
+    (select perm_id from KRIM_PERM_T where nm='MODIFY ACTIVITIES' and NMSPC_CD='KC-NEGOTIATION')
+  )
 ;
 
 --Modify Activities (ID: 1272)
 insert into KRIM_ROLE_PERM_T (ROLE_PERM_ID,OBJ_ID,VER_NBR,ACTV_IND,ROLE_ID,PERM_ID) 
-  values (KRIM_ROLE_PERM_ID_S.NEXTVAL, SYS_GUID(), 1, 'Y', 1238, 1272)
+  values (KRIM_ROLE_PERM_ID_S.NEXTVAL, SYS_GUID(), 1, 'Y', 
+    (select ROLE_ID from KRIM_ROLE_T where ROLE_NM='CRS Management' and NMSPC_CD='KC-ADM'),
+    (select perm_id from KRIM_PERM_T where nm='VIEW NEGOTIATION - UNRESTRICTED' and NMSPC_CD='KC-NEGOTIATION')
+  )
 ;
 
 
@@ -1010,14 +1114,17 @@ insert into KRIM_ROLE_PERM_T (ROLE_PERM_ID,OBJ_ID,VER_NBR,ACTV_IND,ROLE_ID,PERM_
 -- 38. UAR-1159: Add 'View Negotiation' permission 1273 to Role 1500 'Negotiation View' and also change namespace to 'KC-NEGOTIATION' 
 -- ====================================================================================================================
 
---View Negotiation (ID: 1272)
-insert into KRIM_ROLE_PERM_T (ROLE_PERM_ID,OBJ_ID,VER_NBR,ACTV_IND,ROLE_ID,PERM_ID) 
-  values (KRIM_ROLE_PERM_ID_S.NEXTVAL, SYS_GUID(), 1, 'Y', 1500, 1273)
+-- change role namespace 
+update KRIM_ROLE_T set NMSPC_CD='KC-NEGOTIATION' where (ROLE_NM = 'Negotiation View')
 ;
 
--- change role namespace 
-update KRIM_ROLE_T set NMSPC_CD='KC-NEGOTIATION' where (ROLE_ID=1500 AND ROLE_NM = 'Negotiation View')
+--View Negotiation (ID: 1273)
+insert into KRIM_ROLE_PERM_T (ROLE_PERM_ID,OBJ_ID,VER_NBR,ACTV_IND,ROLE_ID,PERM_ID) 
+  values (KRIM_ROLE_PERM_ID_S.NEXTVAL, SYS_GUID(), 1, 'Y',  
+     (select ROLE_ID from KRIM_ROLE_T where ROLE_NM='Negotiation View' and NMSPC_CD='KC-NEGOTIATION'), 
+     (select perm_id from KRIM_PERM_T where nm='VIEW NEGOTIATION' and NMSPC_CD='KC-NEGOTIATION'))
 ;
+
 
 
 -- ====================================================================================================================
@@ -1026,7 +1133,9 @@ update KRIM_ROLE_T set NMSPC_CD='KC-NEGOTIATION' where (ROLE_ID=1500 AND ROLE_NM
 
 insert into krim_role_mbr_t ( role_mbr_id, mbr_id, ver_nbr, obj_id, role_id, mbr_typ_cd, actv_frm_dt, actv_to_dt ) 
     with TMP as (select DISTINCT KRIM_ROLE_MBR_T.MBR_ID MBRID FROM KRIM_ROLE_MBR_T WHERE ( ROLE_ID = '1213' AND ACTV_TO_DT IS NULL))
-  select KRIM_ROLE_MBR_ID_S.NEXTVAL, MBRID, 1, SYS_GUID(), 1500, 'P', null, null
+  select KRIM_ROLE_MBR_ID_S.NEXTVAL, MBRID, 1, SYS_GUID(), 
+    (select ROLE_ID from KRIM_ROLE_T where ROLE_NM='Negotiation View' and NMSPC_CD='KC-NEGOTIATION'),
+    'P', null, null
   from TMP
 ;
 
